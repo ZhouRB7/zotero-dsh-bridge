@@ -249,7 +249,6 @@ export function apply(ctx, config) {
       sessionCount: itemSessions.size,
       sessionTitlePrefix,
       zoteroDb: zotero.dbPath,
-      openUrl: openUrl(),
     })
   }
 
@@ -264,24 +263,13 @@ export function apply(ctx, config) {
     }
   }
 
-  function handleDebug(req, res) {
-    if (req.method === 'OPTIONS') return jsonResponse(res, 204, {})
-    const out = {}
-    try { out.getAdvertisedUrl = ctx.webApp?.getAdvertisedUrl?.() } catch (e) { out.getAdvertisedUrl = 'ERR:' + e.message }
-    try { out.getOrigin = ctx.webServer.getOrigin() } catch (e) { out.getOrigin = 'ERR:' + e.message }
-    try { out.authenticated = ctx.connection.authenticatedUrl(out.getOrigin || 'http://127.0.0.1') } catch (e) { out.authenticated = 'ERR:' + e.message }
-    try { out.authenticated2 = ctx.connection.authenticatedUrl(out.getAdvertisedUrl || 'http://127.0.0.1') } catch (e) { out.authenticated2 = 'ERR:' + e.message }
-    try { out.env = { DSH_WEB_URL: process.env.DSH_WEB_URL } } catch (e) {}
-    jsonResponse(res, 200, out)
-  }
-
   function handleStatus(req, res) {
     if (req.method === 'OPTIONS') return jsonResponse(res, 204, {})
     // status now takes an optional itemKey query param to read that item's session
     const url = new URL(req.url, 'http://localhost')
     const itemKey = url.searchParams.get('itemKey') || 'general'
     const sessionId = itemSessions.get(itemKey)
-    if (!sessionId) return jsonResponse(res, 200, { ok: true, sessionId: null, itemKey, openUrl: openUrl() })
+    if (!sessionId) return jsonResponse(res, 200, { ok: true, sessionId: null, itemKey })
     const session = ctx.sessions.get(sessionId)
     if (!session) return jsonResponse(res, 200, { ok: true, sessionId, itemKey, available: false })
     const messages = session.deriveMessages()
@@ -299,14 +287,12 @@ export function apply(ctx, config) {
       running: agent ? agent.status === 'running' : false,
       reply: assistantText,
       seq: Number(session.seq),
-      openUrl: openUrl(),
     })
   }
 
   ctx.effect(() => ctx.webServer.register({ kind: 'exact', path: '/zotero-bridge/health', handler: handleHealth }))
   ctx.effect(() => ctx.webServer.register({ kind: 'exact', path: '/zotero-bridge/chat', handler: handleChat }))
   ctx.effect(() => ctx.webServer.register({ kind: 'exact', path: '/zotero-bridge/status', handler: handleStatus }))
-  ctx.effect(() => ctx.webServer.register({ kind: 'exact', path: '/zotero-bridge/debug', handler: handleDebug }))
 
   // Publish the current endpoint so Zotero-side integrations can discover it
   // without hardcoding the (per-launch random) port.
