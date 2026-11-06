@@ -318,10 +318,10 @@ bash build/build-zotero-xpi.sh
 
 ## 发布前自定义
 
-上传 GitHub 前，请替换以下占位符为你的实际信息：
+如你 fork 本项目并改用自己的仓库，需替换以下信息：
 
 1. `zotero-plugin/manifest.json`：
-   - `homepage_url` 和 `applications.zotero.update_url` 中的 `your-username` → 你的 GitHub 用户名。
+   - `homepage_url` 和 `applications.zotero.update_url` 中的 `ZhouRB7` → 你的 GitHub 用户名。
    - 如需自动更新，提供真实可访问的 `update.json`（见 [Mozilla 文档](https://extensionworkshop.com/documentation/manage/updating-your-extension/)）。
 2. `LICENSE` 中的版权信息按需修改。
 
