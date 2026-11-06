@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "DSH Bridge",
+  "version": "1.6.1",
+  "description": "Send the selected Zotero item to DeepSeek Harness and auto-generate reading notes.",
+  "author": "zotero-dsh-bridge",
+  "homepage_url": "https://github.com/your-username/zotero-dsh-bridge",
+  "icons": {
+    "48": "icons/dsh-icon-48.png",
+    "96": "icons/dsh-icon-96.png"
+  },
+  "applications": {
+    "zotero": {
+      "id": "dsh-bridge@zotero-dsh-bridge",
+      "update_url": "https://github.com/your-username/zotero-dsh-bridge/releases/latest/download/update.json",
+      "strict_min_version": "6.999",
+      "strict_max_version": "10.99.99"
+    }
+  }
+}

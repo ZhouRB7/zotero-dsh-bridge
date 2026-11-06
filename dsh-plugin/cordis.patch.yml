@@ -1,0 +1,4 @@
+- insert:
+    - id: zotero-bridge
+      name: '@local/zotero-bridge'
+      config: {}

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Zotero bridge",
+    "description": "Reads the local Zotero library from inside DeepSeek Harness and receives chat prompts from Zotero."
+  }
+}

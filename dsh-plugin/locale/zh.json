@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Zotero 桥接",
+    "description": "在 DeepSeek Harness 中检索本地 Zotero 文献与笔记，并从 Zotero 内向当前会话发送提问。"
+  }
+}
